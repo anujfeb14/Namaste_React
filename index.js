@@ -1,21 +1,17 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
+import ReactDOM from 'react-dom/client'
+import Header from './src/components/Header'
+import Body from './src/components/Body'
 
-const HeadingComponent = () =>{
-    return <h1>Heading</h1>
-}
-
-const MainComponent = () => (
-    <div id='main'>
-        {HeadingComponent()}
-        <HeadingComponent></HeadingComponent>
-        <HeadingComponent/>
-        <div className='child'>
-            <h2>This is react functional component.</h2>
+const AppLayout = () =>{
+    return(
+        <div className='app'>
+            <Header/>
+            <Body/>
         </div>
-    </div>
-);
+    )
+}
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
-root.render(<MainComponent/>)
+root.render(<AppLayout/>)
