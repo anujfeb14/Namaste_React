@@ -1,19 +1,11 @@
-import { useEffect, useState } from "react";
+import useRestaurantMenu from "../utils/useRestrauntMenu";
 import Shimmer from "./Shimmer";
+import { useParams } from "react-router-dom";
 
 const RestrauntMenu = () => {
-  const [resInfo, SetResInfo] = useState([]);
-  useEffect(() => {
-    fetchMenu();
-  }, []);
+  const {resId} = useParams();
 
-  const fetchMenu = async () => {
-    const data = await fetch(
-      "https://www.zomato.com/webroutes/getPage?page_url=/bangalore/kfc-koramangala-6th-block/order&location=&isMobile=0"
-    );
-    const response = await data.json();
-    SetResInfo(response);
-  };
+  const resInfo = useRestaurantMenu(resId);
 
   if (resInfo.length === 0) return <Shimmer />;
 
