@@ -24,12 +24,11 @@ const RestaurantCard = (props) =>{
     )
 }
 
-export const withOfferLabel = (RestaurantCard) =>{
+export const withOpenLabel = (RestaurantCard) =>{
     return (props) => {
-        const {resData} = props;
         return(
             <div>
-                <label>Open Now</label>
+                <label className="absolute bg-black mt-4 ml-4 p-2 rounded-lg text-white">Open Now</label>
                 <RestaurantCard { ...props }/>
             </div>
         )

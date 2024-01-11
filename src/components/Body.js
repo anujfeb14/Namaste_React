@@ -1,5 +1,5 @@
 import React from "react";
-import RestaurantCard from "./RestaurantCard";
+import RestaurantCard, { withOpenLabel } from "./RestaurantCard";
 import { useState, useEffect } from "react";
 import Shimmer from "./Shimmer";
 import useOnlineStatus from "../utils/useOnlineStatus";
@@ -28,11 +28,14 @@ const Body = () => {
   };
 
   const isOnline = useOnlineStatus();
-  if(isOnline === false){
-    return(
+
+  if (isOnline === false) {
+    return (
       <h1>Looks like you're offline! Please check your internet connection.</h1>
-    )
-  } 
+    );
+  }
+
+  const RestaurantCardWithOpenStatus = withOpenLabel(RestaurantCard);
 
   return listOfRestraunts.length === 0 ? (
     <Shimmer />
@@ -46,12 +49,15 @@ const Body = () => {
             value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
           />
-          <button className="px-4 py-0.5 bg-green-300 ml-4 border border-solid rounded-md"
+          <button
+            className="px-4 py-0.5 bg-green-300 ml-4 border border-solid rounded-md"
             onClick={() => {
-                const filteredList = listOfRestraunts.filter(
-                    (restaurant) => restaurant.info.name.toLowerCase().includes(searchText.toLowerCase())
-                )
-                setFilteredRestaurant(filteredList);
+              const filteredList = listOfRestraunts.filter((restaurant) =>
+                restaurant.info.name
+                  .toLowerCase()
+                  .includes(searchText.toLowerCase())
+              );
+              setFilteredRestaurant(filteredList);
             }}
           >
             Search
@@ -70,11 +76,19 @@ const Body = () => {
             Top Rated Restautants
           </button>
         </div>
-        
       </div>
       <div className="flex flex-wrap">
         {filteredRestaurant.map((restaurant) => (
-          <RestaurantCard key={restaurant.info.id} resData={restaurant} />
+          <>
+            {restaurant.info.isOpen ? (
+              <RestaurantCardWithOpenStatus
+                key={restaurant.info.id}
+                resData={restaurant}
+              />
+            ) : (
+              <RestaurantCard key={restaurant.info.id} resData={restaurant} />
+            )}
+          </>
         ))}
       </div>
     </div>
