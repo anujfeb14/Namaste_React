@@ -10,6 +10,8 @@ import RestrauntMenu from './src/components/RestrauntMenu'
 import Shimmer from './src/components/Shimmer'
 // import Grocery from './src/components/Grocery'
 import UserContext from './src/utils/UserContext'
+import { Provider } from 'react-redux'
+import appStore from './src/utils/appStore'
 
 const Grocery = lazy(() => import("./src/components/Grocery"));
 
@@ -25,13 +27,14 @@ const AppLayout = () =>{
     },[])
 
     return(
-        // Here we will have default value as Context value.
-        <UserContext.Provider value={{loggedInUser : userName, setUserName}}>
-             <div className='app'>
-                <Header/>
-                <Outlet/>
-            </div>
-        </UserContext.Provider>
+        <Provider store={appStore}>
+            <UserContext.Provider value={{loggedInUser : userName, setUserName}}>
+                <div className='app'>
+                    <Header/>
+                    <Outlet/>
+                </div>
+            </UserContext.Provider>
+        </Provider>
     )
 }
 
